@@ -38,7 +38,7 @@ pub struct App {
 impl App {
     fn new() -> Self {
         App {
-            mover: Mover::new(PVector::new(0.0, 0.0))
+            mover: Mover::new(PVector::new(0.0, 0.0), 10.0)
             // walker: Walker::new(SCREEN_WIDTH as f64 / 2.0, SCREEN_HEIGHT as f64 / 2.0)
         }
     }
@@ -64,7 +64,7 @@ fn main() {
     use std::{thread, time};
 
     let mut window: PistonWindow =
-        WindowSettings::new("Chapter 2.9 Gravitational attraction", (SCREEN_WIDTH, SCREEN_HEIGHT))
+        WindowSettings::new("Chapter 2 Forces", (SCREEN_WIDTH, SCREEN_HEIGHT))
             .exit_on_esc(true)
             .graphics_api(OpenGL::V3_2)
             .build()
@@ -72,6 +72,7 @@ fn main() {
 
     let mut app = App::new();
 
+    // game loop
     while let Some(event) = window.next() {
         if let Some(_) = event.render_args() {
             app.render(&event, &mut window);

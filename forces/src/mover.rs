@@ -14,25 +14,27 @@ pub struct Mover {
     time: f64,
     position: PVector,
     acceleration: PVector,
-    velocity: PVector
+    velocity: PVector,
+    mass: f64
 }
 
 impl Mover {
-    pub fn new(position: PVector) -> Self {
+    pub fn new(position: PVector, mass: f64) -> Self {
         Mover {
             time: 0.0,
             position,
             acceleration: PVector::new(0.0, 0.0),
-            velocity: PVector::new(0.0, 0.0)
+            velocity: PVector::new(0.0, 0.0),
+            mass
         }
     }
 
     pub fn apply_force(&mut self, force: PVector) {
-        self.acceleration = force;
+        self.acceleration = PVector::add(self.acceleration, PVector::div(force, self.mass));
     }
 
     pub fn update(&mut self) {
-        self.apply_force(PVector::new(10.0, 10.0));
+        // self.apply_force(PVector::new(10.0, 10.0));
         self.update_velocity();
 
         let delta_pos: PVector = PVector::new(self.velocity.x * TIME_STEP, self.velocity.y * TIME_STEP);
