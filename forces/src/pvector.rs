@@ -15,8 +15,8 @@ impl PVector {
 
     pub fn gen_rand() -> Self {
         PVector {
-            x: rand::random::<f64>() * 500.0,
-            y: rand::random::<f64>() * 300.0
+            x: 340.0 / 2.0 + rand::random::<f64>() * 340.0,
+            y: 240.0 / 2.0 + rand::random::<f64>() * 240.0
         }
     }
 

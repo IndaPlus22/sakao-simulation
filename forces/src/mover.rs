@@ -1,14 +1,15 @@
 use crate::pvector::PVector;
 use gfx_device_gl::{CommandBuffer, Resources};
 use gfx_graphics::GfxGraphics;
+use graphics::rectangle;
 use piston::Position;
 use piston_window::math::Matrix2d;
 use std::f64::consts::PI;
 
-const RADIUS: f64 = 16.0;
-const STEP_COLOUR: [f32; 4] = [1.0; 4];
+const RADIUS: f64 = 5.0;
+const CIRCLE_COLOUR: [f32; 4] = [0.9, 0.9, 0.9, 0.85];
 const TIME_STEP: f64 = 0.01;
-const G: f64 = 6674.3;
+const G: f64 = 66743.0;
 
 #[derive(Debug, Copy, Clone)]
 pub struct Mover {
@@ -36,14 +37,15 @@ impl Mover {
             position: PVector::gen_rand(),
             acceleration: PVector::new(0.0, 0.0),
             velocity: PVector::new(0.0, 0.0),
-            mass: rand::random::<f64>() * 10.0,
+            mass: 10.0 + rand::random::<f64>() * 10.0,
         }
     }
 
     pub fn attract(&mut self, m: Mover) -> PVector {
         let mut force: PVector = PVector::sub(self.position, m.position);
         let mut distance: f64 = force.magnitude();
-        distance = Self::constrain(distance, 50.0, 200.0);
+        // println!("dis: {}", distance);
+        distance = Self::constrain(distance, 50.0, 150.0);
         force = force.normalize();
 
         let strength: f64 = (G * self.mass * m.mass) / (distance * distance);
@@ -63,7 +65,8 @@ impl Mover {
     }
 
     pub fn apply_force(&mut self, force: PVector) {
-        self.acceleration = PVector::add(self.acceleration, PVector::div(force, self.mass));
+        // self.acceleration = PVector::add(self.acceleration, PVector::div(force, self.mass));
+        self.acceleration = force;
     }
 
     pub fn update(&mut self) {
@@ -113,6 +116,6 @@ impl Mover {
             self.position.y,
             RADIUS * self.mass / 10.0,
         );
-        piston_window::ellipse(STEP_COLOUR, square, transform, graphics);
+        piston_window::ellipse(CIRCLE_COLOUR, square, transform, graphics);
     }
 }

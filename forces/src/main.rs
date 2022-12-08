@@ -1,12 +1,3 @@
-/**
- * Perlin Noise Walker
- * - The Nature of Code, Example I.5
- * See: https://natureofcode.com/book/introduction/
- *
- * Author: Viola Söderlund <violaso@kth.se>
- * Last updated: 2022-11-23
- */
-mod math;
 // mod walker;
 mod mover;
 mod pvector;
@@ -30,10 +21,6 @@ const SCREEN_HEIGHT: u32 = 480;
 
 const BLACK_COLOUR: [f32; 4] = [0.0; 4];
 
-const STEP_FACTOR: f64 = 100.0;
-
-const G: f64 = 667.43;
-
 
 pub struct App {
     movers: Vec<Mover>,
@@ -51,6 +38,8 @@ impl App {
         for i in 0..10 {
             self.movers.push(Mover::new_rand());
         }
+
+        // println!("start");
 
         // for i in 0..self.movers.len() {
         //     self.movers[i].apply_force(PVector::new(30.0, 0.0));
@@ -118,7 +107,7 @@ fn main() {
             app.update();
         }
 
-        let duration = time::Duration::from_millis(5);
+        let duration = time::Duration::from_millis(10);
         thread::sleep(duration);
     }
 }
