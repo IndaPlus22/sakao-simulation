@@ -9,7 +9,7 @@ use std::f64::consts::PI;
 const RADIUS: f64 = 5.0;
 const CIRCLE_COLOUR: [f32; 4] = [0.9, 0.9, 0.9, 0.85];
 const TIME_STEP: f64 = 0.01;
-const G: f64 = 66743.0;
+const G: f64 = 667430.00;
 
 #[derive(Debug, Copy, Clone)]
 pub struct Mover {
@@ -45,11 +45,13 @@ impl Mover {
         let mut force: PVector = PVector::sub(self.position, m.position);
         let mut distance: f64 = force.magnitude();
         // println!("dis: {}", distance);
-        distance = Self::constrain(distance, 50.0, 150.0);
+        distance = Self::constrain(distance, 30.0, 100.0);
         force = force.normalize();
 
         let strength: f64 = (G * self.mass * m.mass) / (distance * distance);
         force = PVector::scale(force, strength);
+
+        // println!("f: {}, {}", force.x, force.y);
 
         force
     }
@@ -66,7 +68,7 @@ impl Mover {
 
     pub fn apply_force(&mut self, force: PVector) {
         // self.acceleration = PVector::add(self.acceleration, PVector::div(force, self.mass));
-        self.acceleration = force;
+        self.acceleration = PVector::div(force, self.mass);
     }
 
     pub fn update(&mut self) {

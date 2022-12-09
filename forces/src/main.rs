@@ -34,8 +34,8 @@ impl App {
     }
 
     fn init(&mut self) {
-        // self.movers.push(Mover::new(PVector::new(SCREEN_WIDTH as f64 / 2.0, SCREEN_HEIGHT as f64 / 2.0), 60.0));
-        for i in 0..10 {
+        // self.movers.push(Mover::new(PVector::new(SCREEN_WIDTH as f64 / 2.0, SCREEN_HEIGHT as f64 / 2.0), 100.0));
+        for i in 0..20 {
             self.movers.push(Mover::new_rand());
         }
 
@@ -64,11 +64,13 @@ impl App {
     fn update(&mut self) {
         for i in 0..self.movers.len() {
             for j in 0..self.movers.len() {
+                // println!("s acc: {}, {}", self.movers[i].acceleration.x, self.movers[i].acceleration.y);
                 if i != j {
                     let tmp = self.movers[i];
                     let force: PVector = self.movers[j].attract(tmp);
                     self.movers[i].apply_force(force);
                 }
+                // println!("e acc: {}, {}", self.movers[i].acceleration.x, self.movers[i].acceleration.y);
             }
 
             // self.movers[i].apply_force(force);

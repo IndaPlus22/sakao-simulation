@@ -37,7 +37,7 @@ impl PVector {
     }
 
     pub fn magnitude(&mut self) -> f64 {
-        f64::sqrt(f64::powi(self.x, 2) + f64::powi(self.y, 2))
+        f64::sqrt(self.x*self.x + self.y*self.y)
     }
 
     pub fn normalize(&mut self) -> PVector {
